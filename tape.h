@@ -10,4 +10,6 @@ typedef struct
 
 tape_t setTape(int m, int n);
 
+void moveTape(tape_t, int);
+
 #endif

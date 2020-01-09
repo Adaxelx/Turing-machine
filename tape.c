@@ -1,6 +1,6 @@
 #include "tape.h"
 #include <stdlib.h>
-#include <stdio.h>
+
 tape_t setTape(int m, int n)
 {
     tape_t tape;

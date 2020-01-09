@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "tape.h"
+#include "turing.h"
 
 #define MAXL 100
 
@@ -51,7 +52,6 @@ int main()
         printf("Za mało liczb\n");
         return -1;
     }
-    tape_t tape = setTape(m, n);
-    printf("%s - taśma\n", tape.items);
+    turing(setTape(m, n), 0);
     return 0;
 }
