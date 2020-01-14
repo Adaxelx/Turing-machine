@@ -2,10 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int checkTuring(tape_t tape){ 
+int checkTuring(tape_t tape)
+{
     int result = 0; // ustawienie wyniku na 0
-    for(int i=0;i<tape.length;i++){
-        if(tape.items[i]=='0'){ // ilosc 0 oznacza wynik koncowy
+    for (int i = 0; i < tape.length; i++)
+    {
+        if (tape.items[i] == '0')
+        { // ilosc 0 oznacza wynik koncowy
             result++;
         }
     }
@@ -14,7 +17,7 @@ int checkTuring(tape_t tape){
 
 tape_t turing(tape_t tape, int state)
 {
-    char *pointer = malloc((tape.length)*sizeof(char)); // zaalokowanie pamieci na wskaznik ktory wskazuje aktualna pozycje na taśmie
+    char *pointer = malloc((tape.length) * sizeof(char)); // zaalokowanie pamieci na wskaznik ktory wskazuje aktualna pozycje na taśmie
     for (int i = 0; i < tape.length; i++)
     {
         if (i == tape.activeIndex) // w miejsce aktualnego indexu wstawiamy v(ktore imituje strzalke), a w pozostale miejsca spacje
@@ -22,16 +25,16 @@ tape_t turing(tape_t tape, int state)
             pointer[i] = 'v';
             continue;
         }
-        pointer[i]=' ';
+        pointer[i] = ' ';
     }
-    printf("%s\n", pointer); // wypisujemy wskaznik 
+    printf("%s\n", pointer);    // wypisujemy wskaznik
     printf("%s\n", tape.items); // wypisujemy tasnme
-    if (state != 6) // jezeli stan nie jest 6(q6) maszyna Turinga dziala
+    if (state != 6)             // jezeli stan nie jest 6(q6) maszyna Turinga dziala
     {
-        int i = tape.activeIndex; // skrocenie nazwy zeby latwiej sie wpisywalo
-        int prevIndex = i; // index przed przesunieciem tasmy(potrzebny do wypisania)
+        int i = tape.activeIndex;                  // skrocenie nazwy zeby latwiej sie wpisywalo
+        int prevIndex = i;                         // index przed przesunieciem tasmy(potrzebny do wypisania)
         printf("q%d: %c->", state, tape.items[i]); // wypisanie aktualnego stanu oraz wartosci na tasmie przed przesunieciem
-        switch (state) // instrukcja warunkowa ktora pozwala wybrac nam odpowiedni stan(case) a nastepnie w zaleznosci od znaku na tasmie dobrac odpowiednie przesuniecie i ewentualna zamiane tego znaku
+        switch (state)                             // instrukcja warunkowa ktora pozwala wybrac nam odpowiedni stan(case) a nastepnie w zaleznosci od znaku na tasmie dobrac odpowiednie przesuniecie i ewentualna zamiane tego znaku
         {
         case 0:
             if (tape.items[i] == '0')
@@ -143,9 +146,9 @@ tape_t turing(tape_t tape, int state)
             }
             break;
         }
-        char dir = tape.activeIndex>prevIndex ? 'R' : 'L'; // ustalenie przesuniecia w zaleznosci od zmiany indexu(jezeli poprzedni byl wiekszy to w lewo jezeli mniejszy to w prawo)
-        printf("%c, %c\n\n", tape.items[i],dir); // wypisanie zmienionego znaku i przesuniecia
-        return turing(tape, state); // powtorzenie czynnosci az do dojscia do stanu 6
+        char dir = tape.activeIndex > prevIndex ? 'R' : 'L'; // ustalenie przesuniecia w zaleznosci od zmiany indexu(jezeli poprzedni byl wiekszy to w lewo jezeli mniejszy to w prawo)
+        printf("%c, %c\n\n", tape.items[i], dir);            // wypisanie zmienionego znaku i przesuniecia
+        return turing(tape, state);                          // powtorzenie czynnosci az do dojscia do stanu 6
     }
     else
         return tape; // gdy dojdziemy do stanu 6 zwracamy naszą taśmę

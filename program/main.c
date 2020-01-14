@@ -8,28 +8,35 @@
 
 int main()
 {
-    char buf[MAXL]; // deklaracja tablicy ktora będzie przechowywała liczby podane przez uzytkownika(jako chary)
-    fgets(buf, MAXL, stdin); // pobranie od uzytkownika podanych liczb
-    int m, n; // deklaracja m i n
+    char *startMsg = "\nSymulator maszyny Turinga obliczający roznice wlasciwa:\n"
+                     "       { m-n dla m>=n\n"
+                     " m-n = { \n"
+                     "       { 0   dla m<n\n"
+                     "M=({q0,q1,q2,q3,q4,q5,q6},{0,1},{0,1,B},δ,q0,B,0)\n\n"
+                     "Podaj 2 liczby(odzielone spacja):\n"; // Wiadomośc startowa
+    printf("%s", startMsg);
+    char buf[MAXL];                           // deklaracja tablicy ktora będzie przechowywała liczby podane przez uzytkownika(jako chary)
+    fgets(buf, MAXL, stdin);                  // pobranie od uzytkownika podanych liczb
+    int m, n;                                 // deklaracja m i n
     char *temp = malloc(MAXL * sizeof(char)); // alokacja pamięci dla zmiennej przechowującej jedną liczbę
-    int j = 0; // index  do temp   
-    int check = 0; // zmienna do sprawdzenia czy zostały podane 2 liczby
+    int j = 0;                                // index  do temp
+    int check = 0;                            // zmienna do sprawdzenia czy zostały podane 2 liczby
     for (int i = 0; i < strlen(buf) - 1; i++)
     {
-        if ((buf[i] >= '0' && buf[i] <= '9') || buf[i] == ' ')  // uzytkownik moze podać tylko liczbe i oddzielic je spacja
+        if ((buf[i] >= '0' && buf[i] <= '9') || buf[i] == ' ') // uzytkownik moze podać tylko liczbe i oddzielic je spacja
         {
 
             if (buf[i] == ' ' && check == 0) // to powinna byc pierwsza liczba
             {
-                m = atoi(temp); // zamieniamy przechowany napis na typ int 
-                j = 0; // zerujemy index aby zapisac 2 liczbe
+                m = atoi(temp);        // zamieniamy przechowany napis na typ int
+                j = 0;                 // zerujemy index aby zapisac 2 liczbe
                 memset(temp, 0, MAXL); // czyscimy tablice
-                check++; // zaznaczamy ze jedna liczba juz zostala podana
+                check++;               // zaznaczamy ze jedna liczba juz zostala podana
                 continue;
             }
             else if (buf[i] == ' ' && check == 1) // jezeli jedna liczba zostala podana i spotkamy spacje traktujemy to jako podanie kolejnej liczby(3)
             {
-                printf("Za duzo liczb. Podaj 2 liczby oddzielone spacją.\n");
+                printf("Błąd. Za duzo liczb bądz nieprawidłowy znak.\n");
                 return -1;
             }
 
@@ -52,7 +59,7 @@ int main()
         printf("Za mało liczb\n");
         return -1;
     }
-    
-    printf("%d-%d=%d\n",m,n,checkTuring(turing(setTape(m,n),0))); // wyswietlenie wyniku po ustawieniu tasmy i przejsciu po niej
+
+    printf("%d-%d=%d\n", m, n, checkTuring(turing(setTape(m, n), 0))); // wyswietlenie wyniku po ustawieniu tasmy i przejsciu po niej
     return 0;
 }
